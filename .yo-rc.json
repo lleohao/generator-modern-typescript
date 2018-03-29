@@ -1,0 +1,9 @@
+{
+  "generator-node": {
+    "promptValues": {
+      "authorName": "lleohao",
+      "authorEmail": "lleohao@hotmail.com",
+      "authorUrl": "https://github.com/lleohao/generator-modern-typescript"
+    }
+  }
+}
