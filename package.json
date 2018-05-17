@@ -8,22 +8,22 @@
     "email": "lleohao@hotmail.com",
     "url": "https://github.com/lleohao/generator-modern-typescript"
   },
-  "files": ["generators"],
+  "files": [
+    "generators"
+  ],
   "main": "generators/index.js",
-  "keywords": ["typescript", "jest", "tslint", "prettier", "yeoman-generator"],
+  "keywords": [
+    "typescript",
+    "jest",
+    "tslint",
+    "prettier",
+    "yeoman-generator"
+  ],
   "devDependencies": {
     "coveralls": "^3.0.0",
     "ejs-lint": "^0.3.0",
-    "eslint": "^4.19.1",
-    "eslint-config-prettier": "^2.9.0",
-    "eslint-config-xo": "^0.20.1",
-    "eslint-plugin-prettier": "^2.6.0",
-    "gulp-beautify": "^2.0.1",
-    "husky": "^0.14.3",
     "jest": "^22.0.6",
-    "lint-staged": "^6.1.1",
     "nsp": "^2.8.0",
-    "prettier": "^1.11.1",
     "yeoman-assert": "^3.1.0",
     "yeoman-test": "^1.7.0"
   },
@@ -32,6 +32,7 @@
   },
   "dependencies": {
     "chalk": "^2.1.0",
+    "gulp-beautify": "^2.0.1",
     "lodash.merge": "^4.6.1",
     "yeoman-generator": "^2.0.1",
     "yosay": "^2.0.1"
@@ -41,30 +42,7 @@
   },
   "scripts": {
     "prepublishOnly": "nsp check",
-    "pretest": "eslint .",
-    "precommit": "lint-staged",
     "test": "jest"
-  },
-  "lint-staged": {
-    "*.js": ["eslint --fix", "git add"],
-    "*.json": ["prettier --write", "git add"]
-  },
-  "eslintConfig": {
-    "extends": ["xo", "prettier"],
-    "env": {
-      "jest": true,
-      "node": true
-    },
-    "rules": {
-      "prettier/prettier": [
-        "error",
-        {
-          "singleQuote": true,
-          "printWidth": 90
-        }
-      ]
-    },
-    "plugins": ["prettier"]
   },
   "repository": "lleohao/generator-modern-typescript",
   "license": "MIT"
