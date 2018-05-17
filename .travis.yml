@@ -3,4 +3,8 @@ node_js:
   - v9
   - v8
   - v6
-after_script: cat ./coverage/lcov.info | coveralls
+before_script:
+    - npm install -g coveralls
+script: npm test
+after_success:
+    - npm run cover
