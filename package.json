@@ -20,7 +20,7 @@
     "yeoman-generator"
   ],
   "devDependencies": {
-    "coveralls": "^3.0.0",
+    "coveralls": "^3.0.1",
     "ejs-lint": "^0.3.0",
     "jest": "^22.0.6",
     "nsp": "^2.8.0",
