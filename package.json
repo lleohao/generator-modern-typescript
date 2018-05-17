@@ -1,6 +1,6 @@
 {
   "name": "generator-modern-typescript",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "generator mordern typescript",
   "homepage": "https://github.com/lleohao/generator-modern-typescript",
   "author": {
@@ -41,7 +41,6 @@
     "testEnvironment": "node"
   },
   "scripts": {
-    "prepublishOnly": "nsp check",
     "test": "jest"
   },
   "repository": "lleohao/generator-modern-typescript",
