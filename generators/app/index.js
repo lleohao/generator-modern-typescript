@@ -88,6 +88,7 @@ module.exports = class extends Generator {
         devDependencies: {
           '@typescript-eslint/eslint-plugin': '^2.32.0',
           '@typescript-eslint/parser': '^2.32.0',
+          prettier: '^2.0.5',
           eslint: '^7.0.0',
           'eslint-config-airbnb-typescript': '^7.2.1',
           'eslint-plugin-import': '^2.20.2',
