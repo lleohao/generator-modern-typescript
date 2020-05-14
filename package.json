@@ -1,7 +1,7 @@
 {
   "name": "generator-modern-typescript",
   "version": "1.0.1",
-  "description": "generator mordern typescript",
+  "description": "generator modern typescript",
   "homepage": "https://github.com/lleohao/generator-modern-typescript",
   "author": {
     "name": "lleohao",
@@ -21,11 +21,12 @@
   ],
   "devDependencies": {
     "coveralls": "^3.0.1",
-    "ejs-lint": "^0.3.0",
-    "jest": "^22.0.6",
+    "ejs-lint": "^1.1.0",
+    "jest": "^26.0.1",
     "nsp": "^2.8.0",
+    "prettier": "^2.0.5",
     "yeoman-assert": "^3.1.0",
-    "yeoman-test": "^1.7.0"
+    "yeoman-test": "^2.6.0"
   },
   "engines": {
     "npm": ">= 6.0.0"
@@ -33,13 +34,14 @@
   "dependencies": {
     "chalk": "^2.1.0",
     "gulp-beautify": "^2.0.1",
-    "lodash.merge": "^4.6.1",
-    "yeoman-generator": "^2.0.1",
+    "lodash.merge": "^4.6.2",
+    "yeoman-generator": "^4.10.1",
     "yosay": "^2.0.1"
   },
   "jest": {
     "testEnvironment": "node",
-    "collectCoverage": true
+    "collectCoverage": true,
+    "testPathIgnorePatterns": ["generators"]
   },
   "scripts": {
     "test": "jest",

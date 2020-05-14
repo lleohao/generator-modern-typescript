@@ -1,8 +1,11 @@
 {
-  "extends": "./configs/base.json",
-  "exclude": ["node_modules", "**/*.spec.ts"],
   "compilerOptions": {
-    "outDir": "dist",
-    "declaration": true
-  }
+    "target": "esnext",
+    "module": "commonjs",
+    "noImplicitAny": true,
+    "outDir": "out-ts",
+    "sourceMap": true,
+    "declaration": false
+  },
+  "exclude": ["node_modules"]
 }

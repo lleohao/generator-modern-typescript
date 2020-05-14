@@ -1,0 +1,6 @@
+# ts outDir
+out-ts/
+dist/
+
+# editor config
+.idea/

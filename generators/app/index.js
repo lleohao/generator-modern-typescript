@@ -1,119 +1,101 @@
-"use strict";
-const Generator = require("yeoman-generator");
-const chalk = require("chalk");
-const yosay = require("yosay");
-const path = require("path");
-const beautify = require("gulp-beautify");
-const merge = require("lodash.merge");
+'use strict';
+const Generator = require('yeoman-generator');
+const chalk = require('chalk');
+const yosay = require('yosay');
+const path = require('path');
+const beautify = require('gulp-beautify');
+const merge = require('lodash.merge');
 
-let baseConfig = require("./baseConfig");
+let baseConfig = require('./baseConfig');
 
 module.exports = class extends Generator {
-  constructor (args, opts) {
+  constructor(args, opts) {
     super(args, opts);
     // eslint-disable-next-line
     this.registerTransformStream(beautify({ indent_size: 4 }));
   }
-  
-  prompting () {
+
+  prompting() {
     // Have Yeoman greet the user.
-    this.log(
-      yosay(
-        `Welcome to the doozie ${chalk.red(
-          "generator-modern-typescript"
-        )} generator!`
-      )
-    );
-    
+    this.log(yosay(`Welcome to the doozie ${chalk.red('generator-modern-typescript')} generator!`));
+
     const prompts = [
       {
-        type: "input",
-        name: "appName",
-        message: "What's your app name?"
+        type: 'input',
+        name: 'packageName',
+        message: "What's your package name?",
       },
       {
-        type: "confirm",
-        name: "useTslint",
-        message: "Use tslint?",
-        default: true
+        type: 'confirm',
+        name: 'useEslint',
+        message: 'Use eslint and prettier?',
+        default: true,
       },
       {
-        type: "confirm",
-        name: "useJest",
-        message: "Use jest?",
-        default: true
-      }
+        type: 'confirm',
+        name: 'useJest',
+        message: 'Use jest?',
+        default: true,
+      },
     ];
-    
-    return this.prompt(prompts).then(props => {
+
+    return this.prompt(prompts).then((props) => {
       // To access props later use this.props.someAnswer;
       this.props = props;
     });
   }
-  
-  writing () {
-    const { appName, useJest, useTslint } = this.props;
-    const resolvePath = target => {
-      return path.join(appName, target);
+
+  writing() {
+    const { packageName, useJest, useEslint } = this.props;
+
+    const resolvePath = (target) => {
+      return path.join(packageName, target);
     };
-    
-    this.fs.copy(this.templatePath("configs"), resolvePath("configs"));
-    this.fs.copy(
-      this.templatePath("tsconfig.json"),
-      resolvePath("tsconfig.json")
-    );
-    
+
+    baseConfig.name = packageName;
+
+    this.copyTemplate(this.templatePath('.gitignore'), resolvePath('.gitignore'));
+    this.copyTemplate(this.templatePath('tsconfig.json'), resolvePath('tsconfig.json'));
+    this.copyTemplate(this.templatePath('tsconfig.build.json'), resolvePath('tsconfig.build.json'));
+
+    this.copyTemplate(this.templatePath('src/index.ts'), resolvePath('src/index.ts'));
+
     if (useJest) {
-      this.fs.copy(this.templatePath("src"), resolvePath("src"));
-      this.fs.copy(
-        this.templatePath("jest.config.js"),
-        resolvePath("jest.config.js")
-      );
-    } else {
-      this.fs.copy(
-        this.templatePath("src/index.ts"),
-        resolvePath("src/index.ts")
-      );
-      this.fs.copy(
-        this.templatePath("src/tsconfig.dev.json"),
-        resolvePath("src/tsconfig.dev.json")
-      );
-    }
-    
-    baseConfig.name = appName;
-    if (useTslint) {
-      this.fs.copy(
-        this.templatePath("tslint.json"),
-        resolvePath("tslint.json")
-      );
-    }
-    
-    if (useJest) {
+      this.copyTemplate(this.templatePath('src/__test__'), resolvePath('src/__test__'));
+      this.copyTemplate(this.templatePath('jest.config.js'), resolvePath('jest.config.js'));
+
       baseConfig = merge({}, baseConfig, {
         scripts: {
-          test: "jest"
+          test: 'jest',
         },
         devDependencies: {
-          "@types/jest": "^22.2.3",
-          jest: "^22.4.3",
-          "ts-jest": "^22.4.6"
-        }
+          '@types/jest': '^25.2.1',
+          jest: '^26.0.1',
+          'ts-jest': '^25.5.1',
+        },
       });
     }
-    
-    if (useTslint) {
+
+    if (useEslint) {
+      this.copyTemplate(this.templatePath('.eslintignore'), resolvePath('.eslintignore'));
+      this.copyTemplate(this.templatePath('.eslintrc.js'), resolvePath('.eslintrc.js'));
+      this.copyTemplate(this.templatePath('.prettierrc.js'), resolvePath('.prettierrc.js'));
+
       baseConfig = merge({}, baseConfig, {
         scripts: {
-          lint: "tslint --project ./src/tsconfig.dev.json --fix"
+          lint: 'eslint . --ext .js,.jsx,.ts,.tsx',
         },
         devDependencies: {
-          tslint: "^5.10.0",
-          "tslint-plugin-prettier": "^1.3.0",
-          prettier: "^1.12.1"
-        }
+          '@typescript-eslint/eslint-plugin': '^2.32.0',
+          '@typescript-eslint/parser': '^2.32.0',
+          eslint: '^7.0.0',
+          'eslint-config-airbnb-typescript': '^7.2.1',
+          'eslint-plugin-import': '^2.20.2',
+          'eslint-config-prettier': '^6.11.0',
+        },
       });
     }
-    
-    this.fs.write(resolvePath("package.json"), JSON.stringify(baseConfig));
+
+    this.fs.write(resolvePath('package.json'), JSON.stringify(baseConfig));
   }
 };

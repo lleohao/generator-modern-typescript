@@ -3,14 +3,15 @@
   "version": "0.0.1",
   "description": "",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "dev": "tsc -p src/tsconfig.dev.json -w",
-    "build": "tsc -p tsconfig.json"
+    "dev": "tsc -p src/tsconfig.json -w",
+    "build": "tsc -p tsconfig.build.json"
   },
   "devDependencies": {
-    "@types/node": "^9.6.16",
-    "ts-node": "^5.0.1",
-    "typescript": "^2.8.3"
+    "@types/node": "^12.12.16",
+    "ts-node": "^8.10.1",
+    "typescript": "^3.8.3"
   },
   "keywords": [],
   "author": "",

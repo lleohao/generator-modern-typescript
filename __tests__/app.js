@@ -1,62 +1,67 @@
-"use strict";
-const path = require("path");
-const assert = require("yeoman-assert");
-const helpers = require("yeoman-test");
+'use strict';
+const path = require('path');
+const assert = require('yeoman-assert');
+const helpers = require('yeoman-test');
 
-describe("generator-modern-typescript:app", () => {
-  const allFile = [
-    "configs/base.json",
-    "src/__test__/index.spec.ts",
-    "src/index.ts",
-    "src/tsconfig.dev.json",
-    "jest.config.js",
-    "tsconfig.json",
-    "tslint.json",
-    "package.json"
+describe('generator-modern-typescript:app', () => {
+  const baseFiles = [
+    '.gitignore',
+    'jest.config.js',
+    'src/__test__/index.spec.ts',
+    'src/index.ts',
+    'tsconfig.build.json',
+    'tsconfig.json',
   ];
 
-  it("basic test", () => {
-    const appName = 'basicTest';
+  it('name test', () => {
+    const packageName = 'nameTest';
     return helpers
-      .run(path.join(__dirname, "../generators/app"))
-      .withPrompts({ appName })
+      .run(path.join(__dirname, '../generators/app'))
+      .withPrompts({ packageName })
       .then(() => {
-        const assertFiles = allFile.map(file => {
-          return appName + "/" + file;
+        assert.fileContent(`${packageName}/package.json`, `"name": "${packageName}"`);
+      });
+  });
+
+  it('basic test', () => {
+    const packageName = 'packageName';
+    return helpers
+      .run(path.join(__dirname, '../generators/app'))
+      .withPrompts({ packageName: packageName })
+      .then(() => {
+        const assertFiles = baseFiles.map((file) => {
+          return packageName + '/' + file;
         });
 
         assert.file(assertFiles);
-        assert.fileContent(`${appName}/package.json`, `"name": "${appName}"`);
       });
   });
 
-  it("name test", () => {
-    const appName = 'nameTest';
+  it('with eslint', () => {
+    const packageName = 'packageName';
     return helpers
-      .run(path.join(__dirname, "../generators/app"))
-      .withPrompts({ appName })
+      .run(path.join(__dirname, '../generators/app'))
+      .withPrompts({ packageName: packageName, useEslint: true })
       .then(() => {
-        assert.fileContent(`${appName}/package.json`, `"name": "${appName}"`);
+        const assertFiles = baseFiles.concat(['.eslintignore', '.eslintrc.js', '.prettierrc.js']).map((file) => {
+          return packageName + '/' + file;
+        });
+
+        assert.file(assertFiles);
       });
   });
 
-  it("no use jest", () => {
-    const appName = 'jestTest';
+  it('with jest', () => {
+    const packageName = 'packageName';
     return helpers
-      .run(path.join(__dirname, "../generators/app"))
-      .withPrompts({ appName, useJest: false })
+      .run(path.join(__dirname, '../generators/app'))
+      .withPrompts({ packageName: packageName, useJest: true })
       .then(() => {
-        assert.noFile(["jest.config.js"]);
-      });
-  });
+        const assertFiles = baseFiles.concat(['jest.config.js']).map((file) => {
+          return packageName + '/' + file;
+        });
 
-  it("no use tslint", () => {
-    const appName = 'tslintTest';
-    return helpers
-      .run(path.join(__dirname, "../generators/app"))
-      .withPrompts({ appName, useTslint: false })
-      .then(() => {
-        assert.noFile(["tslint.json"]);
+        assert.file(assertFiles);
       });
   });
 });
