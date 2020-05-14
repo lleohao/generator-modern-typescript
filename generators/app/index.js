@@ -54,7 +54,7 @@ module.exports = class extends Generator {
 
     baseConfig.name = packageName;
 
-    this.copyTemplate(this.templatePath('.gitignore'), resolvePath('.gitignore'));
+    this.copyTemplate(this.templatePath('gitignore-template'), resolvePath('.gitignore'));
     this.copyTemplate(this.templatePath('tsconfig.json'), resolvePath('tsconfig.json'));
     this.copyTemplate(this.templatePath('tsconfig.build.json'), resolvePath('tsconfig.build.json'));
 
